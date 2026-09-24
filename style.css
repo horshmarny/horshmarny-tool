@@ -1,0 +1,248 @@
+:root {
+  --bg:            #000000;
+  --surface:       #0e0e10;
+  --surface-var:   #17171a;
+  --surface-hi:    #202024;
+  --on-surface:    #e6e0e9;
+  --on-surface-var:#a8a8b0;
+  --primary:       #d0bcff;
+  --on-primary:    #381e72;
+
+  --r-xs: 8px;
+  --r-s:  12px;
+  --r-m:  16px;
+  --r-l:  20px;
+  --r-xl: 28px;
+
+  --elev-1: 0 1px 2px rgba(0,0,0,.6), 0 1px 3px 1px rgba(0,0,0,.4);
+  --elev-2: 0 1px 2px rgba(0,0,0,.6), 0 2px 6px 2px rgba(0,0,0,.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: Roboto, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--on-surface);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------- ANIMATED BACKGROUND ---------------- */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+/* ---------------- SPLASH ---------------- */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: splashOut .5s ease 2s forwards;
+}
+
+.logo-text {
+  position: relative;
+  font-size: clamp(28px, 9vw, 56px);
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--on-surface);
+  opacity: 0;
+  transform: translateY(6px);
+  animation: logoIn .9s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+@keyframes logoIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes splashOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+
+/* ---------------- TOPBAR ---------------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 100;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: .01em;
+  color: var(--on-surface);
+  padding-left: 8px;
+}
+
+/* ---------------- ICON BUTTON ---------------- */
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background .15s ease;
+}
+
+.icon-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--on-surface);
+  opacity: 0;
+  border-radius: inherit;
+  transition: opacity .2s ease;
+  pointer-events: none;
+}
+
+.icon-btn:active::after { opacity: .12; }
+.icon-btn:active { background: var(--surface-hi); }
+
+.icon-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--on-surface);
+  border-radius: 2px;
+}
+
+/* ---------------- CONTENT ---------------- */
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 8px 16px 32px;
+  max-width: 560px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------------- CARD ---------------- */
+.card {
+  background: rgba(14, 14, 16, .82);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r-xl);
+  padding: 24px 20px;
+  box-shadow: var(--elev-1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.hero-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 22px 24px;
+}
+
+.hero-img {
+  width: min(160px, 44vw);
+  height: auto;
+  border-radius: var(--r-l);
+  margin-bottom: 20px;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: .01em;
+  margin-bottom: 10px;
+  color: var(--on-surface);
+}
+
+.desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--on-surface-var);
+  letter-spacing: .015em;
+  max-width: 34ch;
+}
+
+/* ---------------- TELEGRAM CARD ---------------- */
+.tg-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tg-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--on-surface);
+}
+
+.tg-sub {
+  font-size: 13px;
+  color: var(--on-surface-var);
+  margin-bottom: 18px;
+}
+
+/* ---------------- FILLED BUTTON ---------------- */
+.btn-filled {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  align-self: flex-start;
+  padding: 14px 24px;
+  background: var(--primary);
+  color: var(--on-primary);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .01em;
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow .15s ease;
+  box-shadow: var(--elev-1);
+}
+
+.btn-filled::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  transition: opacity .2s ease;
+  pointer-events: none;
+}
+
+.btn-filled:active::after { opacity: .08; }
+.btn-filled:active { box-shadow: var(--elev-2); }
